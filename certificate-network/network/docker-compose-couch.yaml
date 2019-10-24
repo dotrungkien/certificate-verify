@@ -5,7 +5,7 @@ networks:
 services:
   couchdb0.academy.certificate.com:
     container_name: couchdb0.academy.certificate.com
-    image: hyperledger/fabric-couchdb:0.4.14
+    image: hyperledger/fabric-couchdb:latest
     # Populate the COUCHDB_USER and COUCHDB_PASSWORD to set an admin user and password
     # for CouchDB.  This will prevent CouchDB from operating in an "Admin Party" mode.
     environment:
@@ -30,7 +30,7 @@ services:
 
   couchdb0.student.certificate.com:
     container_name: couchdb0.student.certificate.com
-    image: hyperledger/fabric-couchdb:0.4.14
+    image: hyperledger/fabric-couchdb:latest
     environment:
       - COUCHDB_USER=
       - COUCHDB_PASSWORD=
