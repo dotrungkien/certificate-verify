@@ -19,7 +19,7 @@ jobs:
       # Run mocha
       - run:
           name: npm test
-          command: cd web-app/server && ./node_modules/.bin/nyc ./node_modules/.bin/mocha --recursive --timeout=10000 --exit --reporter mocha-junit-reporter --reporter-options mochaFile=reports/mocha/test-results.xml
+          command: cd web-app/server && ./node_modules/.bin/nyc ./node_modules/.bin/mocha --recursive --timeout=10000 --exit
           when: always
       - run:
           name: code-coverage
@@ -44,8 +44,7 @@ jobs:
             if [[ true ]];  then
               curl -X POST -H "X-ChatWorkToken: $CHATWORK_TOKEN" -d \
                 "body=
-                [info][title] $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME BUIL SUCCESS (flex) [/title]
-                Repository name: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+                [info][title] $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME BUIL SUCCESS (flex) [/title]Repository name: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
                 Author: $CIRCLE_USERNAME
                 Branch: $CIRCLE_BRANCH
                 Commit/pull request link: https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/commit/$CIRCLE_SHA1
@@ -60,8 +59,7 @@ jobs:
             if [[ true ]];  then
               curl -X POST -H "X-ChatWorkToken: $CHATWORK_TOKEN" -d \
                 "body=
-                [info][title] $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME BUIL FAILED (anger) [/title]
-                Repository name: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+                [info][title] $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME BUIL FAILED (anger) [/title]Repository name: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
                 Author: $CIRCLE_USERNAME
                 Branch: $CIRCLE_BRANCH
                 Commit/pull request link: https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/commit/$CIRCLE_SHA1
