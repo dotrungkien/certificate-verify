@@ -7,7 +7,7 @@
     "npm": ">=5"
   },
   "scripts": {
-    "test": "nyc mocha --recursive",
+    "test": "nyc mocha --timeout=5000 --recursive --exit",
     "start": "nodemon ./bin/www"
   },
   "engineStrict": true,
@@ -57,14 +57,11 @@
       "test/**"
     ],
     "reporter": [
-      "text-summary",
+      "text",
       "html"
     ],
     "all": true,
     "check-coverage": true,
-    "statements": 100,
-    "branches": 100,
-    "functions": 100,
-    "lines": 100
+    "statements": 80
   }
 }
