@@ -19,7 +19,7 @@ jobs:
       # Run mocha
       - run:
           name: npm test
-          command: cd web-app/server && ./node_modules/.bin/nyc ./node_modules/.bin/mocha --recursive --timeout=10000 --exit
+          command: cd web-app/server && ./node_modules/.bin/nyc ./node_modules/.bin/mocha --recursive --timeout=5000 --exit
           when: always
       - run:
           name: code-coverage
@@ -36,18 +36,13 @@ jobs:
           path: ./reports/mocha/test-results.xml
       - store_artifacts: # upload test coverage as artifact
           path: /coverage/lcov.info
-          prefix: tests
       - run:
           name: Sending notification
           when: on_success
           command: |
             if [[ true ]];  then
               curl -X POST -H "X-ChatWorkToken: $CHATWORK_TOKEN" -d \
-                "body=[info][title] $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME BUIL SUCCESS (flex) [/title]Repository name: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
-                Author: $CIRCLE_USERNAME
-                Branch: $CIRCLE_BRANCH
-                Commit/pull request link: https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/commit/$CIRCLE_SHA1
-                Build link: https://circleci.com/gh/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_BUILD_NUM[/info]" \
+                "body=[info][title] $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME BUIL SUCCESS (flex) [/title]Repository name: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME%0AAuthor: $CIRCLE_USERNAME%0ABranch: $CIRCLE_BRANCH%0ACommit/pull request link: https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/commit/$CIRCLE_SHA1%0ABuild link: https://circleci.com/gh/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_BUILD_NUM[/info]" \
                 "https://api.chatwork.com/v2/rooms/$CHATWORK_ROOM/messages"
             fi
       - run:
@@ -56,11 +51,7 @@ jobs:
           command: |
             if [[ true ]];  then
               curl -X POST -H "X-ChatWorkToken: $CHATWORK_TOKEN" -d \
-                "body=[info][title] $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME BUIL FAILED (anger) [/title]Repository name: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
-                Author: $CIRCLE_USERNAME
-                Branch: $CIRCLE_BRANCH
-                Commit/pull request link: https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/commit/$CIRCLE_SHA1
-                Build link: https://circleci.com/gh/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_BUILD_NUM[/info]" \
+                "body=[info][title] $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME BUIL FAILED (anger) [/title]Repository name: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME%0AAuthor: $CIRCLE_USERNAME%0ABranch: $CIRCLE_BRANCH%0ACommit/pull request link: https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/commit/$CIRCLE_SHA1%0ABuild link: https://circleci.com/gh/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_BUILD_NUM[/info]" \
                 "https://api.chatwork.com/v2/rooms/$CHATWORK_ROOM/messages"
             fi
       - save_cache:
