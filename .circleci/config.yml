@@ -4,7 +4,7 @@ jobs:
     working_directory: ~/web-app/server
     docker:
       - image: circleci/node:10-browsers
-      - image: mongo
+      - image: mongo:4.2.0
     steps:
       - checkout
       - run:
@@ -14,20 +14,15 @@ jobs:
           key: dependency-cache-{{ checksum "web-app/server/package.json" }}
       - run:
           name: Install npm
-          command: cd web-app/server && npm install
+          command: npm install
       - run: mkdir reports
       - run:
           name: npm test
-          command: cd web-app/server && ./node_modules/.bin/nyc ./node_modules/.bin/mocha --recursive --timeout=5000 --exit
+          command: ./node_modules/.bin/nyc ./node_modules/.bin/mocha --recursive --timeout=5000 --exit
           when: always
       - run:
           name: code-coverage
-          command: |
-            cd web-app/server &&
-            # nyc report requires that nyc has already been run,
-            # which creates the .nyc_output folder containing necessary data
-            ./node_modules/.bin/nyc report --reporter=text-lcov > coverage/lcov.info
-            # ./cc-test-reporter after-build -t lcov
+          command: ./node_modules/.bin/nyc report --reporter=text-lcov > coverage/lcov.info
           when: always
       - store_test_results:
           path: reports
