@@ -4,6 +4,7 @@ jobs:
     working_directory: ~/web-app/server
     docker:
       - image: circleci/node:10-browsers
+      - image: mongo:4.2.0
     steps:
       - checkout
       - run:
